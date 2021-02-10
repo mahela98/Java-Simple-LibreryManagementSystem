@@ -19,22 +19,22 @@ import view.Books;
  */
 public class AddAllbooksToList {
 
-//    public static 
+    public static ArrayList<Books> borrowedBooklist = new ArrayList<>();
 //    public static 
 
     public static ArrayList<Books> bookList() {
         ArrayList<Books> booklist = new ArrayList<>();
-       booklist.clear();
+        booklist.clear();
         try {
-            ResultSet rs = new AllBookListGetting().allbooks();
+            ResultSet rs = null;
+            rs = new AllBookListGetting().allbooks();
             System.out.println("list in control" + rs);
+            Books book;
             while (rs.next()) {
-                Books book;
-                while (rs.next()) {
-                    book = new Books(rs.getInt("bookId"), rs.getString("bookName"), rs.getString("authorname"), rs.getString("publishedDate"), rs.getString("discription"));
-                    booklist.add(book);
-                }
+                book = new Books(rs.getInt("bookId"), rs.getString("bookName"), rs.getString("authorname"), rs.getString("publishedDate"), rs.getString("discription"));
+                booklist.add(book);
             }
+
             DBConnection.closeCon();
         } catch (Exception e) {
             System.err.println("Got an exception in addallbookstolist ");
@@ -42,20 +42,19 @@ public class AddAllbooksToList {
         }
         return booklist;
     }
-    
+
     public static ArrayList<Books> borrowedbooks(int userId) {
-        ArrayList<Books> borrowedBooklist = new ArrayList<>();
-       borrowedBooklist.clear();
+
+        borrowedBooklist.clear();
         try {
             ResultSet rs = new AllBookListGetting().borrowedBooks(userId);
             System.out.println("list in control" + rs);
+            Books borrowedBook;
             while (rs.next()) {
-                Books borrowedBook;
-                while (rs.next()) {
-                    borrowedBook = new Books(rs.getInt("bookId"), rs.getString("bookName"), rs.getString("authorname"), rs.getString("publishedDate"), rs.getString("discription"));
-                    borrowedBooklist.add(borrowedBook);
-                }
+                borrowedBook = new Books(rs.getInt("bookId"), rs.getString("bookName"), rs.getString("authorname"), rs.getString("publishedDate"), rs.getString("discription"));
+                borrowedBooklist.add(borrowedBook);
             }
+
             DBConnection.closeCon();
         } catch (Exception e) {
             System.err.println("Got an exception in addallbookstolist ");
@@ -63,6 +62,5 @@ public class AddAllbooksToList {
         }
         return borrowedBooklist;
     }
-    
-    
+
 }

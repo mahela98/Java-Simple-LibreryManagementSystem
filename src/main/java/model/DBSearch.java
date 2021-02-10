@@ -23,6 +23,7 @@ public class DBSearch {
             e.printStackTrace();
             System.out.println("error in dbsearch");
         }
+        System.out.println(rs);
         return rs;
     }
 }

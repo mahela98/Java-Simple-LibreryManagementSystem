@@ -26,6 +26,8 @@ import control.LoginController;
 import control.MobileValidator;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import control.DisplayUserDetailsCON;
+import control.BookBorrowButtonsCON;
 
 /**
  *
@@ -1002,7 +1004,7 @@ public class HomePage extends javax.swing.JFrame {
 
     //books for book list all books
     public ArrayList<Books> bookListfun() {
-        
+
 //        System.out.println("list in view booklistfun" + bookList);
         return AddAllbooksToList.bookList();
     }
@@ -1021,8 +1023,9 @@ public class HomePage extends javax.swing.JFrame {
     //for borrowed books table
     public ArrayList<Books> borrowedBookList() {
         borrowedBooklist.clear();
+         System.out.println("after clean" + borrowedBooklist);
         borrowedBooklist = AddAllbooksToList.borrowedbooks(this.USERID_HomePage);
-        System.out.println("after clean" + borrowedBooklist);
+        System.out.println("after ADD" + borrowedBooklist);
         return borrowedBooklist;
     }
 
@@ -1178,38 +1181,22 @@ public class HomePage extends javax.swing.JFrame {
     }
 
     private void displayUserDetails() {
+        ResultSet userDetailRS = DisplayUserDetailsCON.userDetails(this.USERID_HomePage);
         try {
-            // create our mysql database connection
-            String myDriver = "com.mysql.cj.jdbc.Driver";
-            // change the time zone to UTC
-            String myUrl = "jdbc:mysql://localhost/java_login?serverTimezone=UTC";
-            Class.forName(myDriver);
-            Connection conn = DriverManager.getConnection(myUrl, "root", "");
-
-            pstmt = conn.prepareStatement("SELECT * FROM users WHERE userId =?;");
-            pstmt.setInt(1, this.USERID_HomePage);
-
-            System.out.println("sql query " + pstmt.toString());
-            ResultSet rs = pstmt.executeQuery();
-
-            while (rs.next()) {
-                String userEmail = rs.getString("email");
-                String fullName = rs.getString("fullName");
-                String userName = rs.getString("userName");
-                String mobile = rs.getString("mobile");
-
-                this.userPASSWORD_DB_Homepage = rs.getString("password");
+            while (userDetailRS.next()) {
+                String userEmail = userDetailRS.getString("email");
+                String fullName = userDetailRS.getString("fullName");
+                String userName = userDetailRS.getString("userName");
+                String mobile = userDetailRS.getString("mobile");
+                this.userPASSWORD_DB_Homepage = userDetailRS.getString("password");
 
                 user_email_proPage.setText(userEmail);
                 user_fullname_proPage.setText(fullName);
                 user_userName_proPage.setText(userName);
                 user_mobile_proPage.setText(mobile);
-
             }
-
         } catch (Exception e) {
-            System.err.println("Got an exception! ");
-            System.err.println(e.getMessage());
+            System.out.println("exception in displaying U D");
         }
     }
 
@@ -1241,33 +1228,15 @@ public class HomePage extends javax.swing.JFrame {
     }//GEN-LAST:event_tabel_booksMouseClicked
     private void bookBorrow_button_Change() {
         try {
-            // create our mysql database connection
-            String myDriver = "com.mysql.cj.jdbc.Driver";
-            // change the time zone to UTC
-            String myUrl = "jdbc:mysql://localhost/java_login?serverTimezone=UTC";
-            Class.forName(myDriver);
-            Connection conn = DriverManager.getConnection(myUrl, "root", "");
-            pstmt = conn.prepareStatement("select * from bookborrowjava where bookId = ? AND userId= ? AND bookReturned=?");
-            pstmt.setInt(1, this.BookId_HomePage);
-            pstmt.setInt(2, this.USERID_HomePage);
-            pstmt.setInt(3, 0);
-
-            System.out.println("sql query " + pstmt.toString());
-            ResultSet rs = pstmt.executeQuery();
-
-            int rowCount_BookBorrow = 0;
-
-            while (rs.next()) {
-                rowCount_BookBorrow++;
-            }
-            if (rowCount_BookBorrow <= 0) {
+            int rowCount_BookBorrow = BookBorrowButtonsCON.bookButtonCHANGE(this.USERID_HomePage, this.BookId_HomePage);
+            System.out.println(rowCount_BookBorrow);
+            if (rowCount_BookBorrow == 0) {
                 this.bookBorrow_Button.setVisible(true);
                 this.return_Book_Button.setVisible(false);
-            } else if (rowCount_BookBorrow > 0) {
+            } else if (rowCount_BookBorrow != 0) {
                 this.bookBorrow_Button.setVisible(false);
                 this.return_Book_Button.setVisible(true);
             }
-
         } catch (Exception e) {
             System.err.println("Got an exception! ");
             System.err.println(e.getMessage());
@@ -1286,12 +1255,12 @@ public class HomePage extends javax.swing.JFrame {
         profilePanel.setVisible(false);
         bookViewPanel.setVisible(true);
         //for borrow book
-        this.BookId_HomePage = borrowedBookslist.get(i).getBookId();
+        this.BookId_HomePage = borrowedBooklist.get(i).getBookId();
 
-        bookName_Label.setText(borrowedBookslist.get(i).getBookName());
-        authorName_label.setText(borrowedBookslist.get(i).getAuthorName());
-        PublishedDate_label.setText(borrowedBookslist.get(i).getPublishedDate());
-        discriptionTextArea.setText(borrowedBookslist.get(i).getDiscription());
+        bookName_Label.setText(borrowedBooklist.get(i).getBookName());
+        authorName_label.setText(borrowedBooklist.get(i).getAuthorName());
+        PublishedDate_label.setText(borrowedBooklist.get(i).getPublishedDate());
+        discriptionTextArea.setText(borrowedBooklist.get(i).getDiscription());
         //to change buttons
         bookBorrow_button_Change();
 

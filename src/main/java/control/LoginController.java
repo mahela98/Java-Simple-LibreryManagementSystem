@@ -16,7 +16,7 @@ public class LoginController {
      
 
     public static int login(String username, String password) {
-        int result = 0;
+        int result = 1;
         int USERID;
         try {
             ResultSet rs = new DBSearch().searchLogin(username, password);

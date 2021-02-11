@@ -28,6 +28,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import control.DisplayUserDetailsCON;
 import control.BookBorrowButtonsCON;
+import model.ChangeUserPWMODEL;
+import model.BookBorrowButtonsModel;
+import model.DisplayUserDetails;
 
 /**
  *
@@ -1023,7 +1026,7 @@ public class HomePage extends javax.swing.JFrame {
     //for borrowed books table
     public ArrayList<Books> borrowedBookList() {
         borrowedBooklist.clear();
-         System.out.println("after clean" + borrowedBooklist);
+        System.out.println("after clean" + borrowedBooklist);
         borrowedBooklist = AddAllbooksToList.borrowedbooks(this.USERID_HomePage);
         System.out.println("after ADD" + borrowedBooklist);
         return borrowedBooklist;
@@ -1278,20 +1281,13 @@ public class HomePage extends javax.swing.JFrame {
         } else {
             String newPassword = this.user_newPW_proPage.getText();
             try {
-                // create our mysql database connection
-                String myDriver = "com.mysql.cj.jdbc.Driver";
-                // change the time zone to UTC
-                String myUrl = "jdbc:mysql://localhost/java_login?serverTimezone=UTC";
-                Class.forName(myDriver);
-                Connection conn = DriverManager.getConnection(myUrl, "root", "");
-                pstmt = conn.prepareStatement("UPDATE users SET password = ? WHERE userId = ?;");
-                pstmt.setString(1, newPassword);
-                pstmt.setInt(2, this.USERID_HomePage);
-                System.out.println("sql query " + pstmt.toString());
-                pstmt.executeUpdate();
-                this.changepw_errorMSG.setForeground(new Color(0, 204, 0));
-                this.changepw_errorMSG.setText("...Password Update Successful...");
-
+                int result = ChangeUserPWMODEL.changePW(this.USERID_HomePage, newPassword);
+                if (result == 0) {
+                    this.changepw_errorMSG.setForeground(new Color(0, 204, 0));
+                    this.changepw_errorMSG.setText("...Password Update Successful...");
+                } else {
+                    this.changepw_errorMSG.setText("ERROR 2");
+                }
             } catch (Exception e) {
                 System.err.println("Got an exception! ");
                 System.err.println(e.getMessage());
@@ -1299,64 +1295,36 @@ public class HomePage extends javax.swing.JFrame {
         }
     }
     private void bookBorrow_ButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bookBorrow_ButtonMouseClicked
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-        LocalDateTime now = LocalDateTime.now();
-        LocalDateTime returnDate = LocalDateTime.now().plusDays(7);
-
-        String borrowedDateDB = dtf.format(now);
-        String returnDateDB = dtf.format(returnDate);
-
-        System.out.println("UserId = " + this.USERID_HomePage);
-        System.out.println("BookId = " + this.BookId_HomePage);
-        System.out.println("borrowed Date = " + dtf.format(now));
-        System.out.println("return Date = " + dtf.format(returnDate));
-
         try {
-            // create our mysql database connection
-            String myDriver = "com.mysql.cj.jdbc.Driver";
-            // change the time zone to UTC
-            String myUrl = "jdbc:mysql://localhost/java_login?serverTimezone=UTC";
-            Class.forName(myDriver);
-            Connection conn = DriverManager.getConnection(myUrl, "root", "");
-            pstmt = conn.prepareStatement("INSERT INTO bookBorrowjava (userId,bookId,borrowdate,returnDate,bookReturned)  VALUES (?,?,?,?,?)");
-            pstmt.setInt(1, this.USERID_HomePage);
-            pstmt.setInt(2, this.BookId_HomePage);
-            pstmt.setString(3, borrowedDateDB);
-            pstmt.setString(4, returnDateDB);
-            pstmt.setInt(5, 0);
-            System.out.println("sql query " + pstmt.toString());
-            pstmt.executeUpdate();
-
+            int result = BookBorrowButtonsModel.borrowbookButtonClicked(this.USERID_HomePage, this.BookId_HomePage);
+            if (result == 0) {
+                //change buttton visibility
+                this.bookBorrow_Button.setVisible(false);
+                this.return_Book_Button.setVisible(true);
+            } else {
+                System.out.println("ERROR");
+            }
         } catch (Exception e) {
             System.err.println("Got an exception! ");
             System.err.println(e.getMessage());
         }
-        //change buttton visibility
-        this.bookBorrow_Button.setVisible(false);
-        this.return_Book_Button.setVisible(true);
+
     }//GEN-LAST:event_bookBorrow_ButtonMouseClicked
 
     private void return_Book_ButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_return_Book_ButtonMouseClicked
         try {
-            // create our mysql database connection
-            String myDriver = "com.mysql.cj.jdbc.Driver";
-            // change the time zone to UTC
-            String myUrl = "jdbc:mysql://localhost/java_login?serverTimezone=UTC";
-            Class.forName(myDriver);
-            Connection conn = DriverManager.getConnection(myUrl, "root", "");
-            pstmt = conn.prepareStatement("UPDATE bookborrowjava SET bookReturned =? WHERE bookId=? AND userId=?");
-            pstmt.setInt(1, 1);
-            pstmt.setInt(2, this.BookId_HomePage);
-            pstmt.setInt(3, this.USERID_HomePage);
-            System.out.println("sql query " + pstmt.toString());
-            pstmt.executeUpdate();
-
+            int result = BookBorrowButtonsModel.bookReturnButtonClicked(this.USERID_HomePage, this.BookId_HomePage);
+            if (result == 0) {
+                this.bookBorrow_Button.setVisible(true);
+                this.return_Book_Button.setVisible(false);
+            } else {
+                System.out.println("error");
+            }
         } catch (Exception e) {
             System.err.println("Got an exception! ");
             System.err.println(e.getMessage());
         }
-        this.bookBorrow_Button.setVisible(true);
-        this.return_Book_Button.setVisible(false);
+
     }//GEN-LAST:event_return_Book_ButtonMouseClicked
 
     private void save_profile_button_ProfilePageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_save_profile_button_ProfilePageMouseClicked
@@ -1389,29 +1357,17 @@ public class HomePage extends javax.swing.JFrame {
             this.edit_user_error_msg_proMsg.setForeground(new Color(255, 0, 0));
             points++;
         }
-
         System.out.println("points = " + points);
         //changing pw in database
         if (points == 0) {
             try {
-                // create our mysql database connection
-                String myDriver = "com.mysql.cj.jdbc.Driver";
-                // change the time zone to UTC
-                String myUrl = "jdbc:mysql://localhost/java_login?serverTimezone=UTC";
-                Class.forName(myDriver);
-                Connection conn = DriverManager.getConnection(myUrl, "root", "");
-                pstmt = conn.prepareStatement("UPDATE users SET email = ?,fullName=?,userName=?,mobile=? WHERE userId = ?;");
-                pstmt.setString(1, email);
-                pstmt.setString(2, fullName);
-                pstmt.setString(3, userName);
-                pstmt.setString(4, mobile);
-                pstmt.setInt(5, this.USERID_HomePage);
-                System.out.println("sql query " + pstmt.toString());
-                pstmt.executeUpdate();
-
-                this.edit_user_error_msg_proMsg.setForeground(new Color(0, 204, 0));
-                this.edit_user_error_msg_proMsg.setText("...Profile Update Successful...");
-
+                int result = DisplayUserDetails.changeUSPW(this.USERID_HomePage, email, fullName, userName, mobile);
+                if (result == 0) {
+                    this.edit_user_error_msg_proMsg.setForeground(new Color(0, 204, 0));
+                    this.edit_user_error_msg_proMsg.setText("...Profile Update Successful...");
+                } else {
+                    System.out.println("error23");
+                }
             } catch (Exception e) {
                 System.err.println("Got an exception! ");
                 System.err.println(e.getMessage());
@@ -1429,16 +1385,12 @@ public class HomePage extends javax.swing.JFrame {
             setVisible(false);
             System.out.println("Deleting the Account");
             try {
-                // create our mysql database connection
-                String myDriver = "com.mysql.cj.jdbc.Driver";
-                // change the time zone to UTC
-                String myUrl = "jdbc:mysql://localhost/java_login?serverTimezone=UTC";
-                Class.forName(myDriver);
-                Connection conn = DriverManager.getConnection(myUrl, "root", "");
-                pstmt = conn.prepareStatement("DELETE FROM users WHERE userId=?;");
-                pstmt.setInt(1, this.USERID_HomePage);
-                System.out.println("sql query " + pstmt.toString());
-                pstmt.executeUpdate();
+                int result = DisplayUserDetails.deleteAccount(this.USERID_HomePage);
+                if (result == 0) {
+                    System.out.println("Account deleted");
+                } else {
+                    System.out.println("Erron in deleting");
+                }
             } catch (Exception e) {
                 System.err.println("Got an exception! ");
                 System.err.println(e.getMessage());
@@ -1452,17 +1404,14 @@ public class HomePage extends javax.swing.JFrame {
 
         //to change cursor
         Cursor typeCursor = new Cursor(Cursor.TEXT_CURSOR);
-
         //        user_email_proPage.setFocusable(true);
         user_fullname_proPage.setFocusable(true);
         user_mobile_proPage.setFocusable(true);
         user_userName_proPage.setFocusable(true);
-
         //        user_email_proPage.setCursor(typeCursor);
         user_fullname_proPage.setCursor(typeCursor);
         user_mobile_proPage.setCursor(typeCursor);
         user_userName_proPage.setCursor(typeCursor);
-
         edit_profile_Button_profilePage.setVisible(false);
         save_profile_button_ProfilePage.setVisible(true);
     }//GEN-LAST:event_edit_profile_Button_profilePageMouseClicked
@@ -1501,7 +1450,6 @@ public class HomePage extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(HomePage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {

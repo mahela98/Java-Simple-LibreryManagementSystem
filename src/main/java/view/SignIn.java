@@ -13,6 +13,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 import control.UserSigninCON;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 
 /**
  *
@@ -30,7 +32,10 @@ public class SignIn extends javax.swing.JFrame {
      * Creates new form SignIn
      */
     public SignIn() {
-        initComponents();
+       initComponents();
+        Toolkit toolkit = getToolkit();
+        Dimension size = toolkit.getScreenSize();
+        setLocation(size.width / 2 - getWidth() / 2, size.height / 2 - getHeight() / 2);
     }
 
     /**

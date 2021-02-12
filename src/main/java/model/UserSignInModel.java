@@ -44,19 +44,15 @@ public class UserSignInModel {
                 System.out.println("sql query " + pstmt.toString());
                 pstmt.executeUpdate();
                 rowCount = 0;
-            }
-            else if (rowCount > 0) {
+            } else if (rowCount > 0) {
                 System.out.println("Email is already taken in model");
-                
             }
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("error in dbsearch");
         }
-
         System.out.println(rowCount);
         return rowCount;
-
     }
 
     public static int gettingUId(String email, String password) {
@@ -68,7 +64,6 @@ public class UserSignInModel {
             pstmt = conn.prepareStatement("select * from users where email = ? AND password= ?");
             pstmt.setString(1, email);
             pstmt.setString(2, password);
-
             System.out.println("sql query " + pstmt.toString());
             ResultSet rs = pstmt.executeQuery();
 
@@ -79,7 +74,6 @@ public class UserSignInModel {
         } catch (Exception e) {
             System.err.println("Got an exception! ");
             System.err.println(e.getMessage());
-
         }
         return USERID;
     }

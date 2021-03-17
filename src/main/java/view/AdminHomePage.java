@@ -32,6 +32,7 @@ import model.AdminBookDeleteModel;
 import model.ChangeUserPWMODEL;
 import model.BookBorrowButtonsModel;
 import model.DisplayUserDetails;
+import control.AddAllUsersToListCON;
 
 /**
  *
@@ -45,7 +46,8 @@ public class AdminHomePage extends javax.swing.JFrame {
     public int USERID_HomePage = 1;
     public int BookId_HomePage;
     private String userPASSWORD_DB_Homepage;
-    public ArrayList<Books> bookList = bookListfun();
+    public ArrayList<Books> bookList = new ArrayList<>();
+    public ArrayList<Users> userList = new ArrayList<>();
 
     /**
      * Creates new form AdminHomePage
@@ -55,7 +57,9 @@ public class AdminHomePage extends javax.swing.JFrame {
         Toolkit toolkit = getToolkit();
         Dimension size = toolkit.getScreenSize();
         setLocation(size.width / 2 - getWidth() / 2, size.height / 2 - getHeight() / 2);
-        showBooks();
+
+        allBookList();
+        showallBooks();
 
         //changing table header
         tabel_books.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 15));
@@ -63,10 +67,10 @@ public class AdminHomePage extends javax.swing.JFrame {
         tabel_books.getTableHeader().setBackground(new Color(102, 153, 255));
         tabel_books.getTableHeader().setForeground(new Color(0, 0, 34));
 
-        borrowed_Books_table.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 15));
-        borrowed_Books_table.getTableHeader().setOpaque(false);
-        borrowed_Books_table.getTableHeader().setBackground(new Color(102, 153, 255));
-        borrowed_Books_table.getTableHeader().setForeground(new Color(0, 0, 34));
+        userList_table.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 15));
+        userList_table.getTableHeader().setOpaque(false);
+        userList_table.getTableHeader().setBackground(new Color(102, 153, 255));
+        userList_table.getTableHeader().setForeground(new Color(0, 0, 34));
     }
 
     /**
@@ -127,7 +131,7 @@ public class AdminHomePage extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         userTable = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        borrowed_Books_table = new javax.swing.JTable();
+        userList_table = new javax.swing.JTable();
         profilePanel = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         user_email_proPage = new javax.swing.JTextField();
@@ -238,6 +242,9 @@ public class AdminHomePage extends javax.swing.JFrame {
         userListLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 userListLabelMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                userListLabelMouseEntered(evt);
             }
         });
 
@@ -784,10 +791,10 @@ public class AdminHomePage extends javax.swing.JFrame {
 
         jScrollPane4.setBackground(new java.awt.Color(0, 0, 34));
 
-        borrowed_Books_table.setBackground(new java.awt.Color(255, 255, 255));
-        borrowed_Books_table.setFont(new java.awt.Font("Garamond", 0, 18)); // NOI18N
-        borrowed_Books_table.setForeground(new java.awt.Color(0, 0, 102));
-        borrowed_Books_table.setModel(new javax.swing.table.DefaultTableModel(
+        userList_table.setBackground(new java.awt.Color(255, 255, 255));
+        userList_table.setFont(new java.awt.Font("Garamond", 0, 18)); // NOI18N
+        userList_table.setForeground(new java.awt.Color(0, 0, 102));
+        userList_table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -795,17 +802,17 @@ public class AdminHomePage extends javax.swing.JFrame {
                 "User Name", "Email", "Mobile"
             }
         ));
-        borrowed_Books_table.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        borrowed_Books_table.setGridColor(new java.awt.Color(255, 255, 255));
-        borrowed_Books_table.setRowHeight(25);
-        borrowed_Books_table.setSelectionBackground(new java.awt.Color(195, 226, 255));
-        borrowed_Books_table.setSelectionForeground(new java.awt.Color(0, 0, 51));
-        borrowed_Books_table.addMouseListener(new java.awt.event.MouseAdapter() {
+        userList_table.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        userList_table.setGridColor(new java.awt.Color(255, 255, 255));
+        userList_table.setRowHeight(25);
+        userList_table.setSelectionBackground(new java.awt.Color(195, 226, 255));
+        userList_table.setSelectionForeground(new java.awt.Color(0, 0, 51));
+        userList_table.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                borrowed_Books_tableMouseClicked(evt);
+                userList_tableMouseClicked(evt);
             }
         });
-        jScrollPane4.setViewportView(borrowed_Books_table);
+        jScrollPane4.setViewportView(userList_table);
 
         javax.swing.GroupLayout userTableLayout = new javax.swing.GroupLayout(userTable);
         userTable.setLayout(userTableLayout);
@@ -1344,11 +1351,6 @@ public class AdminHomePage extends javax.swing.JFrame {
         int y = evt.getYOnScreen();
         this.setLocation(x - xMouse, y - yMouse);
     }//GEN-LAST:event_dragLabelMouseDragged
-    public ArrayList<Books> bookListfun() {
-
-//        System.out.println("list in view booklistfun" + bookList);
-        return AddAllbooksToList.bookList();
-    }
 
 
     private void dragLabelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dragLabelMousePressed
@@ -1372,6 +1374,8 @@ public class AdminHomePage extends javax.swing.JFrame {
         panelWithTheTable.setVisible(true);
         profilePanel.setVisible(false);
         bookViewPanel.setVisible(false);
+        allBookList();
+        showallBooks();
 
         //---------changing the backgrounda color fo labels------------
         profileLabel.setBackground(new Color(0, 0, 20));
@@ -1389,6 +1393,8 @@ public class AdminHomePage extends javax.swing.JFrame {
         profilePanel.setVisible(false);
         bookViewPanel.setVisible(false);
 
+        allUserList();
+        showAllUserList();
         //---------changing the backgrounda color fo labels------------
         profileLabel.setBackground(new Color(0, 0, 20));
         userListLabel.setBackground(new Color(35, 115, 230));
@@ -1397,8 +1403,19 @@ public class AdminHomePage extends javax.swing.JFrame {
         aboutLabel.setBackground(new Color(0, 0, 20));
     }//GEN-LAST:event_userListLabelMouseClicked
 
-    public void showBooks() {
+    public void allBookList() {
+        bookList.clear();
+        System.out.println("after clean" + bookList);
+        this.bookList = AddAllbooksToList.bookList();
+        System.out.println("after ADD" + bookList);
+
+    }
+
+    public void showallBooks() {
+        System.out.println("show all books");
         DefaultTableModel model = (DefaultTableModel) tabel_books.getModel();
+        //to delete previous data
+        model.setRowCount(0);
         Object[] row = new Object[3];
         for (int i = 0; i < bookList.size(); i++) {
             row[0] = bookList.get(i).getBookName();
@@ -1406,7 +1423,28 @@ public class AdminHomePage extends javax.swing.JFrame {
             row[2] = bookList.get(i).getPublishedDate();
             model.addRow(row);
         }
+    }
 
+    //for display user details
+    public void allUserList() {
+        userList.clear();
+        System.out.println("after clean" + userList);
+        this.userList = AddAllUsersToListCON.allUserList();
+        System.out.println("after ADD" + userList);
+    }
+
+    public void showAllUserList() {
+        System.out.println("show boro books");
+        DefaultTableModel model = (DefaultTableModel) userList_table.getModel();
+        //to delete previous data
+        model.setRowCount(0);
+        Object[] row = new Object[3];
+        for (int i = 0; i < userList.size(); i++) {
+            row[0] = userList.get(i).getFullName();
+            row[1] = userList.get(i).getEmail();
+            row[2] = userList.get(i).getMobile();
+            model.addRow(row);
+        }
     }
 
 
@@ -1533,19 +1571,19 @@ public class AdminHomePage extends javax.swing.JFrame {
     }//GEN-LAST:event_tabel_booksMouseClicked
 
 
-    private void borrowed_Books_tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_borrowed_Books_tableMouseClicked
-        int i = borrowed_Books_table.getSelectedRow();
-        TableModel model = borrowed_Books_table.getModel();
-        //----------------making the panel visiable
-        userTable.setVisible(false);
-        ContactPanel.setVisible(false);
-        aboutPanel.setVisible(false);
-        panelWithTheTable.setVisible(false);
-        profilePanel.setVisible(false);
-        bookViewPanel.setVisible(true);
+    private void userList_tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userList_tableMouseClicked
+//        int i = userList_table.getSelectedRow();
+//        TableModel model = userList_table.getModel();
+//        //----------------making the panel visiable
+//        userTable.setVisible(false);
+//        ContactPanel.setVisible(false);
+//        aboutPanel.setVisible(false);
+//        panelWithTheTable.setVisible(false);
+//        profilePanel.setVisible(false);
+//        bookViewPanel.setVisible(true);
 
 
-    }//GEN-LAST:event_borrowed_Books_tableMouseClicked
+    }//GEN-LAST:event_userList_tableMouseClicked
 
     private void savePW_In_ProfileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_savePW_In_ProfileMouseClicked
         changePWfunction();
@@ -1700,7 +1738,26 @@ public class AdminHomePage extends javax.swing.JFrame {
         try {
             int result = AdminBookDeleteModel.adminDeleteBook(this.BookId_HomePage);
             if (result == 0) {
+                //need to design process
                 System.out.println("Book deleted");
+
+                //back to table
+                //panel visibility
+                userTable.setVisible(false);
+                ContactPanel.setVisible(false);
+                aboutPanel.setVisible(false);
+                panelWithTheTable.setVisible(true);
+                profilePanel.setVisible(false);
+                bookViewPanel.setVisible(false);
+                allBookList();
+                showallBooks();
+
+                //---------changing the backgrounda color fo labels------------
+                profileLabel.setBackground(new Color(0, 0, 20));
+                userListLabel.setBackground(new Color(0, 0, 20));
+                BookListLabel.setBackground(new Color(35, 115, 230));
+                contactLabel.setBackground(new Color(0, 0, 20));
+                aboutLabel.setBackground(new Color(0, 0, 20));
 
             } else {
                 System.out.println("ERROR deleting book");
@@ -1712,6 +1769,10 @@ public class AdminHomePage extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_return_Book_ButtonActionPerformed
+
+    private void userListLabelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userListLabelMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_userListLabelMouseEntered
 
     /**
      * @param args the command line arguments
@@ -1759,7 +1820,6 @@ public class AdminHomePage extends javax.swing.JFrame {
     private javax.swing.JTextField authorName_label;
     private javax.swing.JTextField bookName_Label;
     private javax.swing.JPanel bookViewPanel;
-    private javax.swing.JTable borrowed_Books_table;
     private javax.swing.JLabel changePW_Homepage_Profile;
     private javax.swing.JLabel changePW_Homepage_Profile1;
     private javax.swing.JLabel changepw_errorMSG;
@@ -1823,6 +1883,7 @@ public class AdminHomePage extends javax.swing.JFrame {
     private javax.swing.JButton save_profile_button_ProfilePage1;
     private javax.swing.JTable tabel_books;
     private javax.swing.JLabel userListLabel;
+    private javax.swing.JTable userList_table;
     private javax.swing.JPanel userTable;
     private javax.swing.JPasswordField user_currentPW_proPage;
     private javax.swing.JPasswordField user_currentPW_proPage1;

@@ -48,7 +48,7 @@ public class HomePage extends javax.swing.JFrame {
     public int BookId_HomePage;
     private String userPASSWORD_DB_Homepage;
     public ArrayList<Books> bookList = bookListfun();
-    ArrayList<Books> borrowedBookslist = bookListfun();
+//    ArrayList<Books> borrowedBookslist = bookListfun();
     ArrayList<Books> borrowedBooklist = new ArrayList<>();
 
     public void setUSERID_HomePage(int USERID_HomePage) {

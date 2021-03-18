@@ -1598,6 +1598,8 @@ public class AdminHomePage extends javax.swing.JFrame {
         BookListLabel.setBackground(new Color(0, 0, 20));
         addBookLabel.setBackground(new Color(35, 115, 230));
         profileLabel.setBackground(new Color(0, 0, 20));
+        aboutLabel.setBackground(new Color(0, 0, 20));
+
         addBookAdminErrorMSGLabel.setText("");
         clearAddBook();
     }//GEN-LAST:event_addBookLabelMouseClicked

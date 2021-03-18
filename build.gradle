@@ -2,6 +2,7 @@ apply plugin: 'java'
 apply plugin: 'jacoco'
 apply plugin: 'application'
 
+
 mainClassName = 'MVCtest01.Main'
 
 repositories {

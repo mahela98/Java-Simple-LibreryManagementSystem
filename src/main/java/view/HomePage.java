@@ -1137,6 +1137,8 @@ public class HomePage extends javax.swing.JFrame {
         BookListLabel.setBackground(new Color(0, 0, 20));
         contactLabel.setBackground(new Color(35, 115, 230));
         profileLabel.setBackground(new Color(0, 0, 20));
+        aboutLabel.setBackground(new Color(0, 0, 20));
+
     }//GEN-LAST:event_contactLabelMouseClicked
 
     private void profileLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileLabelMouseClicked

@@ -33,6 +33,7 @@ import model.ChangeUserPWMODEL;
 import model.BookBorrowButtonsModel;
 import model.DisplayUserDetails;
 import control.AddAllUsersToListCON;
+import control.AddBookAdminCon;
 
 /**
  *
@@ -43,11 +44,15 @@ public class AdminHomePage extends javax.swing.JFrame {
     PreparedStatement pstmt;
     int xMouse;
     int yMouse;
-    public int USERID_HomePage = 1;
+    public int USERID_HomePage;
     public int BookId_HomePage;
     private String userPASSWORD_DB_Homepage;
     public ArrayList<Books> bookList = new ArrayList<>();
     public ArrayList<Users> userList = new ArrayList<>();
+
+    public void setUSERID_HomePage(int USERID_HomePage) {
+        this.USERID_HomePage = USERID_HomePage;
+    }
 
     /**
      * Creates new form AdminHomePage
@@ -93,7 +98,7 @@ public class AdminHomePage extends javax.swing.JFrame {
         BookListLabel = new javax.swing.JLabel();
         userListLabel = new javax.swing.JLabel();
         aboutLabel = new javax.swing.JLabel();
-        contactLabel = new javax.swing.JLabel();
+        addBookLabel = new javax.swing.JLabel();
         profileLabel = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
@@ -126,9 +131,19 @@ public class AdminHomePage extends javax.swing.JFrame {
         delete_user_label_profilePage1 = new javax.swing.JLabel();
         save_profile_button_ProfilePage1 = new javax.swing.JButton();
         edit_user_error_msg_proMsg1 = new javax.swing.JLabel();
-        ContactPanel = new javax.swing.JPanel();
+        addBookPanelAdmin = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        jLabel30 = new javax.swing.JLabel();
+        bookNameAddBook = new javax.swing.JTextField();
+        authorNameAddBook = new javax.swing.JTextField();
+        jLabel31 = new javax.swing.JLabel();
+        publishedDateAddBook = new javax.swing.JTextField();
+        jLabel32 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        discriptionAddBook = new javax.swing.JTextArea();
+        jLabel33 = new javax.swing.JLabel();
+        addbookButtonADMIN = new javax.swing.JButton();
+        addBookAdminErrorMSGLabel = new javax.swing.JLabel();
         userTable = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         userList_table = new javax.swing.JTable();
@@ -261,16 +276,16 @@ public class AdminHomePage extends javax.swing.JFrame {
             }
         });
 
-        contactLabel.setBackground(new java.awt.Color(0, 0, 20));
-        contactLabel.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        contactLabel.setForeground(new java.awt.Color(255, 255, 255));
-        contactLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        contactLabel.setText("Contact");
-        contactLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        contactLabel.setOpaque(true);
-        contactLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+        addBookLabel.setBackground(new java.awt.Color(0, 0, 20));
+        addBookLabel.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        addBookLabel.setForeground(new java.awt.Color(255, 255, 255));
+        addBookLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        addBookLabel.setText("Add Book");
+        addBookLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        addBookLabel.setOpaque(true);
+        addBookLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                contactLabelMouseClicked(evt);
+                addBookLabelMouseClicked(evt);
             }
         });
 
@@ -299,7 +314,7 @@ public class AdminHomePage extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(profileLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(contactLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(addBookLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(aboutLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(59, 59, 59))
@@ -309,7 +324,7 @@ public class AdminHomePage extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(BookListLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(aboutLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(contactLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(addBookLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(userListLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(profileLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -752,39 +767,143 @@ public class AdminHomePage extends javax.swing.JFrame {
 
         jPanel4.add(ViewProfilesPanel, "card8");
 
-        ContactPanel.setBackground(new java.awt.Color(0, 0, 34));
-        ContactPanel.setPreferredSize(new java.awt.Dimension(1050, 500));
+        addBookPanelAdmin.setBackground(new java.awt.Color(0, 0, 34));
+        addBookPanelAdmin.setPreferredSize(new java.awt.Dimension(1050, 500));
 
         jLabel6.setFont(new java.awt.Font("Dialog", 0, 36)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("Contact ");
+        jLabel6.setText("Add Book");
 
-        jLabel5.setText("contact information");
+        jLabel30.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jLabel30.setForeground(new java.awt.Color(0, 204, 204));
+        jLabel30.setText("Book Name");
 
-        javax.swing.GroupLayout ContactPanelLayout = new javax.swing.GroupLayout(ContactPanel);
-        ContactPanel.setLayout(ContactPanelLayout);
-        ContactPanelLayout.setHorizontalGroup(
-            ContactPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(ContactPanelLayout.createSequentialGroup()
-                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(ContactPanelLayout.createSequentialGroup()
-                .addGap(217, 217, 217)
-                .addComponent(jLabel5)
-                .addContainerGap(722, Short.MAX_VALUE))
+        bookNameAddBook.setBackground(new java.awt.Color(0, 0, 34));
+        bookNameAddBook.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        bookNameAddBook.setForeground(new java.awt.Color(255, 255, 255));
+        bookNameAddBook.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        bookNameAddBook.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 153, 255)));
+
+        authorNameAddBook.setBackground(new java.awt.Color(0, 0, 34));
+        authorNameAddBook.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        authorNameAddBook.setForeground(new java.awt.Color(255, 255, 255));
+        authorNameAddBook.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        authorNameAddBook.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 153, 255)));
+
+        jLabel31.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jLabel31.setForeground(new java.awt.Color(0, 204, 204));
+        jLabel31.setText("Author Name");
+
+        publishedDateAddBook.setBackground(new java.awt.Color(0, 0, 34));
+        publishedDateAddBook.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        publishedDateAddBook.setForeground(new java.awt.Color(255, 255, 255));
+        publishedDateAddBook.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        publishedDateAddBook.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 153, 255)));
+
+        jLabel32.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jLabel32.setForeground(new java.awt.Color(0, 204, 204));
+        jLabel32.setText("Published Date");
+
+        discriptionAddBook.setBackground(new java.awt.Color(0, 0, 34));
+        discriptionAddBook.setColumns(20);
+        discriptionAddBook.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
+        discriptionAddBook.setForeground(new java.awt.Color(255, 255, 255));
+        discriptionAddBook.setLineWrap(true);
+        discriptionAddBook.setRows(5);
+        discriptionAddBook.setWrapStyleWord(true);
+        discriptionAddBook.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 153, 255)));
+        discriptionAddBook.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        discriptionAddBook.setMargin(new java.awt.Insets(2, 2, 2, 2));
+        jScrollPane2.setViewportView(discriptionAddBook);
+
+        jLabel33.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jLabel33.setForeground(new java.awt.Color(0, 204, 204));
+        jLabel33.setText("Description");
+
+        addbookButtonADMIN.setBackground(new java.awt.Color(35, 115, 230));
+        addbookButtonADMIN.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        addbookButtonADMIN.setForeground(new java.awt.Color(0, 0, 51));
+        addbookButtonADMIN.setText("Add Book");
+        addbookButtonADMIN.setBorder(null);
+        addbookButtonADMIN.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        addbookButtonADMIN.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                addbookButtonADMINMouseClicked(evt);
+            }
+        });
+        addbookButtonADMIN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addbookButtonADMINActionPerformed(evt);
+            }
+        });
+
+        addBookAdminErrorMSGLabel.setBackground(new java.awt.Color(0, 0, 34));
+        addBookAdminErrorMSGLabel.setForeground(new java.awt.Color(255, 0, 0));
+        addBookAdminErrorMSGLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        addBookAdminErrorMSGLabel.setToolTipText("");
+
+        javax.swing.GroupLayout addBookPanelAdminLayout = new javax.swing.GroupLayout(addBookPanelAdmin);
+        addBookPanelAdmin.setLayout(addBookPanelAdminLayout);
+        addBookPanelAdminLayout.setHorizontalGroup(
+            addBookPanelAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(addBookPanelAdminLayout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addGroup(addBookPanelAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(addbookButtonADMIN, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(addBookPanelAdminLayout.createSequentialGroup()
+                        .addGroup(addBookPanelAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(addBookPanelAdminLayout.createSequentialGroup()
+                                .addGroup(addBookPanelAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(addBookPanelAdminLayout.createSequentialGroup()
+                                        .addGap(14, 14, 14)
+                                        .addGroup(addBookPanelAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel31)
+                                            .addComponent(jLabel30)
+                                            .addComponent(jLabel32))))
+                                .addGap(327, 327, 327)
+                                .addComponent(jLabel33)
+                                .addGap(18, 18, 18))
+                            .addGroup(addBookPanelAdminLayout.createSequentialGroup()
+                                .addGroup(addBookPanelAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(authorNameAddBook, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
+                                    .addComponent(bookNameAddBook, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
+                                    .addComponent(publishedDateAddBook)
+                                    .addComponent(addBookAdminErrorMSGLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(115, 115, 115)))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 405, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(56, Short.MAX_VALUE))
         );
-        ContactPanelLayout.setVerticalGroup(
-            ContactPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(ContactPanelLayout.createSequentialGroup()
-                .addGap(40, 40, 40)
+        addBookPanelAdminLayout.setVerticalGroup(
+            addBookPanelAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(addBookPanelAdminLayout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jLabel6)
-                .addGap(45, 45, 45)
-                .addComponent(jLabel5)
-                .addContainerGap(352, Short.MAX_VALUE))
+                .addGap(46, 46, 46)
+                .addGroup(addBookPanelAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(addBookPanelAdminLayout.createSequentialGroup()
+                        .addGroup(addBookPanelAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel30)
+                            .addComponent(bookNameAddBook, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel33))
+                        .addGap(56, 56, 56)
+                        .addGroup(addBookPanelAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel31)
+                            .addComponent(authorNameAddBook, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(48, 48, 48)
+                        .addGroup(addBookPanelAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel32)
+                            .addComponent(publishedDateAddBook, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(addBookAdminErrorMSGLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
+                .addComponent(addbookButtonADMIN, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(23, 23, 23))
         );
 
-        jPanel4.add(ContactPanel, "card3");
+        jPanel4.add(addBookPanelAdmin, "card3");
 
         userTable.setBackground(new java.awt.Color(0, 0, 34));
         userTable.setPreferredSize(new java.awt.Dimension(1050, 500));
@@ -1321,8 +1440,8 @@ public class AdminHomePage extends javax.swing.JFrame {
             .addGap(0, 1045, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addComponent(dragLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 962, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 83, Short.MAX_VALUE)))
+                    .addComponent(dragLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 888, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 157, Short.MAX_VALUE)))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
@@ -1369,7 +1488,7 @@ public class AdminHomePage extends javax.swing.JFrame {
         //panel visibility
 
         userTable.setVisible(false);
-        ContactPanel.setVisible(false);
+        addBookPanelAdmin.setVisible(false);
         aboutPanel.setVisible(false);
         panelWithTheTable.setVisible(true);
         profilePanel.setVisible(false);
@@ -1381,14 +1500,14 @@ public class AdminHomePage extends javax.swing.JFrame {
         profileLabel.setBackground(new Color(0, 0, 20));
         userListLabel.setBackground(new Color(0, 0, 20));
         BookListLabel.setBackground(new Color(35, 115, 230));
-        contactLabel.setBackground(new Color(0, 0, 20));
+        addBookLabel.setBackground(new Color(0, 0, 20));
         aboutLabel.setBackground(new Color(0, 0, 20));
     }//GEN-LAST:event_BookListLabelMouseClicked
 
     private void userListLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userListLabelMouseClicked
         userTable.setVisible(true);
         panelWithTheTable.setVisible(false);
-        ContactPanel.setVisible(false);
+        addBookPanelAdmin.setVisible(false);
         aboutPanel.setVisible(false);
         profilePanel.setVisible(false);
         bookViewPanel.setVisible(false);
@@ -1399,7 +1518,7 @@ public class AdminHomePage extends javax.swing.JFrame {
         profileLabel.setBackground(new Color(0, 0, 20));
         userListLabel.setBackground(new Color(35, 115, 230));
         BookListLabel.setBackground(new Color(0, 0, 20));
-        contactLabel.setBackground(new Color(0, 0, 20));
+        addBookLabel.setBackground(new Color(0, 0, 20));
         aboutLabel.setBackground(new Color(0, 0, 20));
     }//GEN-LAST:event_userListLabelMouseClicked
 
@@ -1451,7 +1570,7 @@ public class AdminHomePage extends javax.swing.JFrame {
     private void aboutLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_aboutLabelMouseClicked
         //panel visibility
         userTable.setVisible(false);
-        ContactPanel.setVisible(false);
+        addBookPanelAdmin.setVisible(false);
         aboutPanel.setVisible(true);
         panelWithTheTable.setVisible(false);
         profilePanel.setVisible(false);
@@ -1461,14 +1580,14 @@ public class AdminHomePage extends javax.swing.JFrame {
         profileLabel.setBackground(new Color(0, 0, 20));
         userListLabel.setBackground(new Color(0, 0, 20));
         BookListLabel.setBackground(new Color(0, 0, 20));
-        contactLabel.setBackground(new Color(0, 0, 20));
+        addBookLabel.setBackground(new Color(0, 0, 20));
         aboutLabel.setBackground(new Color(35, 115, 230));
     }//GEN-LAST:event_aboutLabelMouseClicked
 
-    private void contactLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_contactLabelMouseClicked
+    private void addBookLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addBookLabelMouseClicked
         //-----------------------------panel visibility
         userTable.setVisible(false);
-        ContactPanel.setVisible(true);
+        addBookPanelAdmin.setVisible(true);
         aboutPanel.setVisible(false);
         panelWithTheTable.setVisible(false);
         profilePanel.setVisible(false);
@@ -1477,13 +1596,17 @@ public class AdminHomePage extends javax.swing.JFrame {
         //---------changing the backgrounda color fo labels------------
         userListLabel.setBackground(new Color(0, 0, 20));
         BookListLabel.setBackground(new Color(0, 0, 20));
-        contactLabel.setBackground(new Color(35, 115, 230));
+        addBookLabel.setBackground(new Color(35, 115, 230));
         profileLabel.setBackground(new Color(0, 0, 20));
-    }//GEN-LAST:event_contactLabelMouseClicked
+        addBookAdminErrorMSGLabel.setText("");
+        clearAddBook();
+    }//GEN-LAST:event_addBookLabelMouseClicked
 
+  
+    
     private void profileLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileLabelMouseClicked
         userTable.setVisible(false);
-        ContactPanel.setVisible(false);
+        addBookPanelAdmin.setVisible(false);
         aboutPanel.setVisible(false);
         panelWithTheTable.setVisible(false);
         profilePanel.setVisible(true);
@@ -1493,7 +1616,7 @@ public class AdminHomePage extends javax.swing.JFrame {
         //---------changing the backgrounda color fo labels------------
         userListLabel.setBackground(new Color(0, 0, 20));
         BookListLabel.setBackground(new Color(0, 0, 20));
-        contactLabel.setBackground(new Color(0, 0, 20));
+        addBookLabel.setBackground(new Color(0, 0, 20));
         aboutLabel.setBackground(new Color(0, 0, 20));
         profileLabel.setBackground(new Color(35, 115, 230));
 
@@ -1555,7 +1678,7 @@ public class AdminHomePage extends javax.swing.JFrame {
         TableModel model = tabel_books.getModel();
         //----------------making the panel visiable
         userTable.setVisible(false);
-        ContactPanel.setVisible(false);
+        addBookPanelAdmin.setVisible(false);
         aboutPanel.setVisible(false);
         panelWithTheTable.setVisible(false);
         profilePanel.setVisible(false);
@@ -1744,7 +1867,7 @@ public class AdminHomePage extends javax.swing.JFrame {
                 //back to table
                 //panel visibility
                 userTable.setVisible(false);
-                ContactPanel.setVisible(false);
+                addBookPanelAdmin.setVisible(false);
                 aboutPanel.setVisible(false);
                 panelWithTheTable.setVisible(true);
                 profilePanel.setVisible(false);
@@ -1756,7 +1879,7 @@ public class AdminHomePage extends javax.swing.JFrame {
                 profileLabel.setBackground(new Color(0, 0, 20));
                 userListLabel.setBackground(new Color(0, 0, 20));
                 BookListLabel.setBackground(new Color(35, 115, 230));
-                contactLabel.setBackground(new Color(0, 0, 20));
+                addBookLabel.setBackground(new Color(0, 0, 20));
                 aboutLabel.setBackground(new Color(0, 0, 20));
 
             } else {
@@ -1774,6 +1897,62 @@ public class AdminHomePage extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_userListLabelMouseEntered
 
+    private void addbookButtonADMINMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addbookButtonADMINMouseClicked
+
+    }//GEN-LAST:event_addbookButtonADMINMouseClicked
+
+    private void addbookButtonADMINActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addbookButtonADMINActionPerformed
+        //addbook Functions
+        String bookNameAB = this.bookNameAddBook.getText();
+        String authorNameAB = this.authorNameAddBook.getText();
+        String publishedDateAB = this.publishedDateAddBook.getText();
+        String discriptionAB = this.discriptionAddBook.getText();
+
+        int marks = 0;
+
+        if (this.bookNameAddBook.getText().trim().isEmpty()) {
+            addBookAdminErrorMSGLabel.setText("Empty Book Name");
+            addBookAdminErrorMSGLabel.setForeground(new Color(255, 0, 0));
+        } else if (this.authorNameAddBook.getText().trim().isEmpty()) {
+            addBookAdminErrorMSGLabel.setText("Empty Author Name");
+            addBookAdminErrorMSGLabel.setForeground(new Color(255, 0, 0));
+        } else if (this.publishedDateAddBook.getText().trim().isEmpty()) {
+            addBookAdminErrorMSGLabel.setText("Empty Published Date");
+            addBookAdminErrorMSGLabel.setForeground(new Color(255, 0, 0));
+        } else {
+            System.out.println(bookNameAB + authorNameAB + publishedDateAB);
+            canAddbookAdmin(bookNameAB, authorNameAB, publishedDateAB, discriptionAB);
+        }
+    }//GEN-LAST:event_addbookButtonADMINActionPerformed
+
+    public void canAddbookAdmin(String bookNameAB, String authorNameAB, String publishedDateAB, String discriptionAB) {
+        try {
+            int result = AddBookAdminCon.addbookAdmin(bookNameAB, authorNameAB, publishedDateAB, discriptionAB);
+            if (result == -3) {
+                addBookAdminErrorMSGLabel.setText("Error in Program");
+                addBookAdminErrorMSGLabel.setForeground(new Color(255, 0, 0));
+            } else if (result == 0) {
+                addBookAdminErrorMSGLabel.setText(".. Book Added Successfully ..");
+                addBookAdminErrorMSGLabel.setForeground(new Color(0, 204, 0));
+                clearAddBook();
+            } else {
+                addBookAdminErrorMSGLabel.setText("Book is already in the database");
+                addBookAdminErrorMSGLabel.setForeground(new Color(255, 0, 0));
+            }
+
+        } catch (Exception e) {
+  System.err.println("Got an exception! ");
+                System.err.println(e.getMessage());
+        }
+    }
+
+      public void clearAddBook(){
+       this.bookNameAddBook.setText("");
+       this.authorNameAddBook.setText("");
+       this.publishedDateAddBook.setText("");
+      this.discriptionAddBook.setText("");
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -1811,22 +1990,27 @@ public class AdminHomePage extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel BookListLabel;
-    private javax.swing.JPanel ContactPanel;
     private javax.swing.JTextField PublishedDate_label;
     private javax.swing.JPanel ViewProfilesPanel;
     private javax.swing.JLabel aboutLabel;
     private javax.swing.JPanel aboutPanel;
+    private javax.swing.JLabel addBookAdminErrorMSGLabel;
+    private javax.swing.JLabel addBookLabel;
+    private javax.swing.JPanel addBookPanelAdmin;
+    private javax.swing.JButton addbookButtonADMIN;
     private javax.swing.JScrollPane all_Books_table;
+    private javax.swing.JTextField authorNameAddBook;
     private javax.swing.JTextField authorName_label;
+    private javax.swing.JTextField bookNameAddBook;
     private javax.swing.JTextField bookName_Label;
     private javax.swing.JPanel bookViewPanel;
     private javax.swing.JLabel changePW_Homepage_Profile;
     private javax.swing.JLabel changePW_Homepage_Profile1;
     private javax.swing.JLabel changepw_errorMSG;
     private javax.swing.JLabel changepw_errorMSG1;
-    private javax.swing.JLabel contactLabel;
     private javax.swing.JLabel delete_user_label_profilePage;
     private javax.swing.JLabel delete_user_label_profilePage1;
+    private javax.swing.JTextArea discriptionAddBook;
     private javax.swing.JTextArea discriptionTextArea;
     private javax.swing.JLabel dragLabel;
     private javax.swing.JButton edit_profile_Button_profilePage;
@@ -1854,8 +2038,11 @@ public class AdminHomePage extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -1868,6 +2055,7 @@ public class AdminHomePage extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JLabel logoutLabel;
     private javax.swing.JPanel panelWithTheTable;
@@ -1876,6 +2064,7 @@ public class AdminHomePage extends javax.swing.JFrame {
     private javax.swing.JPanel profilePanel1;
     private javax.swing.JPanel profilepage_passwordPanel;
     private javax.swing.JPanel profilepage_passwordPanel1;
+    private javax.swing.JTextField publishedDateAddBook;
     private javax.swing.JButton return_Book_Button;
     private javax.swing.JButton savePW_In_Profile;
     private javax.swing.JButton savePW_In_Profile1;

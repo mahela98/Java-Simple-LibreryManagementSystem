@@ -175,6 +175,7 @@ public class AdminHomePage extends javax.swing.JFrame {
         aboutPanel = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        jPanel8 = new javax.swing.JPanel();
         bookViewPanel = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
         authorName_label = new javax.swing.JTextField();
@@ -757,7 +758,7 @@ public class AdminHomePage extends javax.swing.JFrame {
         );
         ViewProfilesPanelLayout.setVerticalGroup(
             ViewProfilesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 500, Short.MAX_VALUE)
+            .addGap(0, 555, Short.MAX_VALUE)
             .addGroup(ViewProfilesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(ViewProfilesPanelLayout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
@@ -898,7 +899,7 @@ public class AdminHomePage extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(addBookAdminErrorMSGLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 132, Short.MAX_VALUE)
                 .addComponent(addbookButtonADMIN, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(23, 23, 23))
         );
@@ -1283,10 +1284,23 @@ public class AdminHomePage extends javax.swing.JFrame {
                 .addComponent(jLabel7)
                 .addGap(45, 45, 45)
                 .addComponent(jLabel8)
-                .addContainerGap(352, Short.MAX_VALUE))
+                .addContainerGap(407, Short.MAX_VALUE))
         );
 
         jPanel4.add(aboutPanel, "card3");
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1050, Short.MAX_VALUE)
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 555, Short.MAX_VALUE)
+        );
+
+        jPanel4.add(jPanel8, "card9");
 
         bookViewPanel.setBackground(new java.awt.Color(0, 0, 34));
         bookViewPanel.setPreferredSize(new java.awt.Dimension(1050, 500));
@@ -1410,7 +1424,7 @@ public class AdminHomePage extends javax.swing.JFrame {
                     .addComponent(jLabel15)
                     .addComponent(PublishedDate_label, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(return_Book_Button, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(42, Short.MAX_VALUE))
+                .addContainerGap(97, Short.MAX_VALUE))
         );
 
         jPanel4.add(bookViewPanel, "card3");
@@ -2056,6 +2070,7 @@ public class AdminHomePage extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;

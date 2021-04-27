@@ -1,7 +1,9 @@
 package view;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import model.ChangeUserPrivilegesMODEL;
 
 /**
  *
@@ -72,6 +74,7 @@ public class AdminViewUser extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         SaveButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
+        errorMessageAVULabel = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         dragLabel = new javax.swing.JLabel();
 
@@ -113,9 +116,13 @@ public class AdminViewUser extends javax.swing.JFrame {
         );
 
         fullnameInput.setEditable(false);
-        fullnameInput.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        fullnameInput.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         fullnameInput.setForeground(new java.awt.Color(0, 0, 51));
+        fullnameInput.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        fullnameInput.setToolTipText("");
         fullnameInput.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 153, 255)));
+        fullnameInput.setMargin(new java.awt.Insets(0, 5, 0, 5));
+        fullnameInput.setPreferredSize(new java.awt.Dimension(5, 21));
         fullnameInput.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 fullnameInputActionPerformed(evt);
@@ -127,16 +134,20 @@ public class AdminViewUser extends javax.swing.JFrame {
         jLabel3.setText("Email");
 
         EmailInput.setEditable(false);
-        EmailInput.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        EmailInput.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         EmailInput.setForeground(new java.awt.Color(0, 0, 51));
+        EmailInput.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         EmailInput.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 153, 255)));
+        EmailInput.setMargin(new java.awt.Insets(0, 5, 0, 5));
 
         jLabel4.setText("Mobile Number");
 
         mobileNumberInput.setEditable(false);
-        mobileNumberInput.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        mobileNumberInput.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         mobileNumberInput.setForeground(new java.awt.Color(0, 0, 51));
+        mobileNumberInput.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         mobileNumberInput.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 153, 255)));
+        mobileNumberInput.setMargin(new java.awt.Insets(0, 5, 0, 5));
 
         UserTypeInput.setMaximumRowCount(2);
         UserTypeInput.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Normal User", "Admin" }));
@@ -162,6 +173,10 @@ public class AdminViewUser extends javax.swing.JFrame {
             }
         });
 
+        errorMessageAVULabel.setBackground(new java.awt.Color(102, 102, 102));
+        errorMessageAVULabel.setForeground(new java.awt.Color(0, 204, 51));
+        errorMessageAVULabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -170,7 +185,7 @@ public class AdminViewUser extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(UserTypeInput, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(fullnameInput, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(fullnameInput, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(EmailInput, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(mobileNumberInput, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
@@ -186,6 +201,7 @@ public class AdminViewUser extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
+            .addComponent(errorMessageAVULabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -193,20 +209,22 @@ public class AdminViewUser extends javax.swing.JFrame {
                 .addGap(21, 21, 21)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fullnameInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(fullnameInput, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(EmailInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(EmailInput, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(mobileNumberInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(mobileNumberInput, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(UserTypeInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(errorMessageAVULabel, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(SaveButton)
                     .addComponent(cancelButton))
@@ -328,8 +346,8 @@ public class AdminViewUser extends javax.swing.JFrame {
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void SaveButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SaveButtonMouseClicked
-        String userType = UserTypeInput.getSelectedItem().toString();
-        System.out.println(userType);
+
+        changePrivileges();
     }//GEN-LAST:event_SaveButtonMouseClicked
 
     private void fullnameInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fullnameInputActionPerformed
@@ -371,6 +389,27 @@ public class AdminViewUser extends javax.swing.JFrame {
         });
     }
 
+    public void changePrivileges() {
+        String userTypeString = UserTypeInput.getSelectedItem().toString();
+        System.out.println(userTypeString);
+        int userType = 0;
+        if (userTypeString.equals("Admin")) {
+            userType = 1;
+        } else {
+            userType = 0;
+        }
+        System.out.println(userType);
+        int result = ChangeUserPrivilegesMODEL.changePrivilage(ViewUserId, userType);
+        if (result == 0) {
+            errorMessageAVULabel.setForeground(new Color(0,204,51));
+            errorMessageAVULabel.setText("Update Complete");
+
+        } else {
+            errorMessageAVULabel.setForeground(new Color(204, 0, 0));
+            errorMessageAVULabel.setText("Error");
+        }
+    }
+
     public void setValues() {
         fullnameInput.setText(this.fullName);
         System.out.println(this.fullName);
@@ -391,6 +430,7 @@ public class AdminViewUser extends javax.swing.JFrame {
     private javax.swing.JButton cancelButton;
     private javax.swing.JLabel closeButton;
     private javax.swing.JLabel dragLabel;
+    private javax.swing.JLabel errorMessageAVULabel;
     private javax.swing.JTextField fullnameInput;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

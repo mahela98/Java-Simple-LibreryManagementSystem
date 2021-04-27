@@ -28,7 +28,7 @@ public class AddAllUsersToListCON {
             System.out.println("list in control" + rs);
             Users user;
             while (rs.next()) {
-                user = new Users(rs.getInt("userId"), rs.getString("email"), rs.getString("fullName"), rs.getString("userName"), rs.getString("mobile"), rs.getString("password"));
+                user = new Users(rs.getInt("userId"), rs.getString("email"), rs.getString("fullName"), rs.getString("userName"), rs.getString("mobile"), rs.getString("password"),rs.getInt("adminOrNot"));
                 allUserList.add(user);
             }
 

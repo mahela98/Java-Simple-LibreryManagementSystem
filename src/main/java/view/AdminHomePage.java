@@ -46,6 +46,7 @@ public class AdminHomePage extends javax.swing.JFrame {
     int yMouse;
     public int USERID_HomePage;
     public int BookId_HomePage;
+    public int AdminUserViewId; //for view user details
     private String userPASSWORD_DB_Homepage;
     public ArrayList<Books> bookList = new ArrayList<>();
     public ArrayList<Users> userList = new ArrayList<>();
@@ -175,7 +176,6 @@ public class AdminHomePage extends javax.swing.JFrame {
         aboutPanel = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jPanel8 = new javax.swing.JPanel();
         bookViewPanel = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
         authorName_label = new javax.swing.JTextField();
@@ -192,6 +192,7 @@ public class AdminHomePage extends javax.swing.JFrame {
         setAutoRequestFocus(false);
         setLocationByPlatform(true);
         setUndecorated(true);
+        setPreferredSize(new java.awt.Dimension(1045, 650));
 
         dragLabel.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
@@ -758,7 +759,7 @@ public class AdminHomePage extends javax.swing.JFrame {
         );
         ViewProfilesPanelLayout.setVerticalGroup(
             ViewProfilesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 555, Short.MAX_VALUE)
+            .addGap(0, 500, Short.MAX_VALUE)
             .addGroup(ViewProfilesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(ViewProfilesPanelLayout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
@@ -899,7 +900,7 @@ public class AdminHomePage extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(addBookAdminErrorMSGLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 132, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
                 .addComponent(addbookButtonADMIN, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(23, 23, 23))
         );
@@ -1284,23 +1285,10 @@ public class AdminHomePage extends javax.swing.JFrame {
                 .addComponent(jLabel7)
                 .addGap(45, 45, 45)
                 .addComponent(jLabel8)
-                .addContainerGap(407, Short.MAX_VALUE))
+                .addContainerGap(352, Short.MAX_VALUE))
         );
 
         jPanel4.add(aboutPanel, "card3");
-
-        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
-        jPanel8.setLayout(jPanel8Layout);
-        jPanel8Layout.setHorizontalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1050, Short.MAX_VALUE)
-        );
-        jPanel8Layout.setVerticalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 555, Short.MAX_VALUE)
-        );
-
-        jPanel4.add(jPanel8, "card9");
 
         bookViewPanel.setBackground(new java.awt.Color(0, 0, 34));
         bookViewPanel.setPreferredSize(new java.awt.Dimension(1050, 500));
@@ -1424,7 +1412,7 @@ public class AdminHomePage extends javax.swing.JFrame {
                     .addComponent(jLabel15)
                     .addComponent(PublishedDate_label, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(return_Book_Button, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(97, Short.MAX_VALUE))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
 
         jPanel4.add(bookViewPanel, "card3");
@@ -1618,8 +1606,7 @@ public class AdminHomePage extends javax.swing.JFrame {
         clearAddBook();
     }//GEN-LAST:event_addBookLabelMouseClicked
 
-  
-    
+
     private void profileLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileLabelMouseClicked
         userTable.setVisible(false);
         addBookPanelAdmin.setVisible(false);
@@ -1711,17 +1698,16 @@ public class AdminHomePage extends javax.swing.JFrame {
 
 
     private void userList_tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userList_tableMouseClicked
-//        int i = userList_table.getSelectedRow();
-//        TableModel model = userList_table.getModel();
-//        //----------------making the panel visiable
-//        userTable.setVisible(false);
-//        ContactPanel.setVisible(false);
-//        aboutPanel.setVisible(false);
-//        panelWithTheTable.setVisible(false);
-//        profilePanel.setVisible(false);
-//        bookViewPanel.setVisible(true);
+        int i = userList_table.getSelectedRow();
+        TableModel model = userList_table.getModel();
 
-
+        AdminViewUser view00 = new AdminViewUser();
+        view00.setViewUserId(userList.get(i).getUserId());
+        view00.setEmail(userList.get(i).getEmail());
+        view00.setMobileNumber(userList.get(i).getMobile());
+        view00.setAdminOrNot(userList.get(i).getAdminOrNot());
+        view00.setFullName(userList.get(i).getFullName());
+        view00.setVisible(true);
     }//GEN-LAST:event_userList_tableMouseClicked
 
     private void savePW_In_ProfileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_savePW_In_ProfileMouseClicked
@@ -1957,18 +1943,18 @@ public class AdminHomePage extends javax.swing.JFrame {
             }
 
         } catch (Exception e) {
-  System.err.println("Got an exception! ");
-                System.err.println(e.getMessage());
+            System.err.println("Got an exception! ");
+            System.err.println(e.getMessage());
         }
     }
 
-      public void clearAddBook(){
-       this.bookNameAddBook.setText("");
-       this.authorNameAddBook.setText("");
-       this.publishedDateAddBook.setText("");
-      this.discriptionAddBook.setText("");
+    public void clearAddBook() {
+        this.bookNameAddBook.setText("");
+        this.authorNameAddBook.setText("");
+        this.publishedDateAddBook.setText("");
+        this.discriptionAddBook.setText("");
     }
-    
+
     /**
      * @param args the command line arguments
      */
@@ -2070,7 +2056,6 @@ public class AdminHomePage extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;

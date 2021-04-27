@@ -10,17 +10,30 @@ package view;
  * @author EACMS
  */
 public class Users {
-      private int userId;
-      private String email,fullName,userName,mobile,password;
 
-    public Users(int userId, String email, String fullName, String userName, String mobile, String password) {
+    private int userId, adminOrNot;
+    private String email, fullName, userName, mobile, password;
+
+    public Users(int userId, String email, String fullName, String userName, String mobile, String password, int adminOrNot) {
         this.userId = userId;
         this.email = email;
         this.fullName = fullName;
         this.userName = userName;
         this.mobile = mobile;
         this.password = password;
+        this.adminOrNot = adminOrNot;
+
     }
+
+    public int getAdminOrNot() {
+        return adminOrNot;
+    }
+
+    public void setAdminOrNot(int adminOrNot) {
+        this.adminOrNot = adminOrNot;
+    }
+
+   
 
     public int getUserId() {
         return userId;
@@ -69,5 +82,5 @@ public class Users {
     public void setPassword(String password) {
         this.password = password;
     }
-      
+
 }
